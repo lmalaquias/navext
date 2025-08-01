@@ -1,0 +1,83 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor directories and files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Node modules (if you add build tools later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+build/
+*.zip
+*.crx
+*.pem
+
+# Private keys and certificates
+*.key
+*.pem
+*.cert
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Test coverage
+coverage/
+*.lcov
+
+# Temporary files
+*.tmp
+*.temp
+*.log
+
+# Chrome extension specific
+# Private key for extension packaging
+key.pem
+
+# Packed extensions
+*.crx
+*.nex
+
+# Web Store assets (if you don't want to version control them)
+promotional/
+screenshots/
+
+# Development/debug files
+debug/
+test-reports/
+
+# Personal notes
+notes.txt
+TODO.txt
+TODO.md
+
+# Backup files
+*.bak
+*.backup
+*_backup/
+
+# Icons source files (keep only the final PNGs)
+*.psd
+*.ai
+*.sketch
+*.xcf
+
+# Any local configuration
+config.local.js
+settings.local.json
