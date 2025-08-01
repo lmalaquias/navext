@@ -20,5 +20,3 @@ Browser extensions can access sensitive data like passwords, browsing history, a
 4. Enable Developer Mode
 5. Click "Load unpacked" and select the NavExt folder
 6. Once uploaded to your browser click on the icon and then "Scan all Extensions"
-
-👤 Created by Leandro Malaquias
