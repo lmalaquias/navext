@@ -14,4 +14,12 @@ Browser extensions can access sensitive data like passwords, browsing history, a
 📦 Installation:
 Download from releases or load unpacked in Chrome developer mode
 
+## 📦 Installation
+1. Download the release package
+2. Extract to a folder
+3. Open Chrome Extensions (chrome://extensions/)
+4. Enable Developer Mode
+5. Click "Load unpacked" and select the NavExt folder
+6. Once uploaded to your browser click on the icon and then "Scan all Extensions"
+
 👤 Created by Leandro Malaquias
