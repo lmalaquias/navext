@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      width: 400px;
+      min-height: 500px;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #f5f5f5;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    
+    .header p {
+      margin: 5px 0 0 0;
+      font-size: 12px;
+      opacity: 0.9;
+    }
+    
+    .scan-button {
+      background: white;
+      color: #667eea;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: transform 0.2s;
+    }
+    
+    .scan-button:hover {
+      transform: scale(1.05);
+    }
+    
+    .scan-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+    
+    .stats {
+      display: flex;
+      justify-content: space-around;
+      padding: 15px;
+      background: white;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    
+    .stat {
+      text-align: center;
+    }
+    
+    .stat-number {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    }
+    
+    .stat-label {
+      font-size: 12px;
+      color: #666;
+      margin-top: 2px;
+    }
+    
+    .risk-high { color: #e74c3c; }
+    .risk-medium { color: #f39c12; }
+    .risk-low { color: #27ae60; }
+    
+    .extensions-list {
+      padding: 10px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+    
+    .extension-item {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    
+    .extension-item:hover {
+      transform: translateX(5px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    
+    .extension-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    
+    .extension-icon {
+      width: 32px;
+      height: 32px;
+      margin-right: 10px;
+      border-radius: 6px;
+    }
+    
+    .extension-name {
+      flex: 1;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    
+    .risk-badge {
+      padding: 3px 10px;
+      border-radius: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    
+    .risk-badge.high {
+      background: #fee;
+      color: #e74c3c;
+    }
+    
+    .risk-badge.medium {
+      background: #ffeaa7;
+      color: #f39c12;
+    }
+    
+    .risk-badge.low {
+      background: #d1f2eb;
+      color: #27ae60;
+    }
+    
+    .risk-factors {
+      font-size: 12px;
+      color: #666;
+      margin-top: 5px;
+    }
+    
+    .risk-factor {
+      display: inline-block;
+      margin-right: 10px;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 50px;
+      color: #666;
+    }
+    
+    .loading-spinner {
+      display: inline-block;
+      width: 40px;
+      height: 40px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid #667eea;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    .detail-view {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: white;
+      z-index: 1000;
+      overflow-y: auto;
+      transform: translateX(100%);
+      transition: transform 0.3s;
+    }
+    
+    .detail-view.active {
+      transform: translateX(0);
+    }
+    
+    .detail-header {
+      background: #f8f9fa;
+      padding: 15px;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+    }
+    
+    .back-button {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      margin-right: 15px;
+      color: #667eea;
+    }
+    
+    .detail-content {
+      padding: 20px;
+    }
+    
+    .permission-list {
+      margin-top: 10px;
+    }
+    
+    .permission-item {
+      padding: 8px;
+      margin: 5px 0;
+      background: #f8f9fa;
+      border-radius: 6px;
+      font-size: 13px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .permission-item.dangerous {
+      background: #fee;
+      color: #c0392b;
+    }
+    
+    .permission-icon {
+      margin-right: 8px;
+    }
+    
+    .section {
+      margin-bottom: 25px;
+    }
+    
+    .section-title {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 10px;
+      color: #333;
+    }
+    
+    .warning-box {
+      background: #fff3cd;
+      border: 1px solid #ffeeba;
+      color: #856404;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    
+    .success-box {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      color: #155724;
+      padding: 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    
+    .footer {
+      background: #f8f9fa;
+      padding: 12px;
+      text-align: center;
+      font-size: 11px;
+      color: #666;
+      border-top: 1px solid #e0e0e0;
+    }
+    
+    .footer a {
+      color: #667eea;
+      text-decoration: none;
+      margin: 0 5px;
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🛡️ NavExt</h1>
+    <p>Scan your extensions for security risks</p>
+    <button id="scanButton" class="scan-button">Scan All Extensions</button>
+  </div>
+  
+  <div id="stats" class="stats" style="display: none;">
+    <div class="stat">
+      <div class="stat-number" id="totalCount">0</div>
+      <div class="stat-label">Total</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number risk-high" id="highRiskCount">0</div>
+      <div class="stat-label">High Risk</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number risk-medium" id="mediumRiskCount">0</div>
+      <div class="stat-label">Medium Risk</div>
+    </div>
+    <div class="stat">
+      <div class="stat-number risk-low" id="lowRiskCount">0</div>
+      <div class="stat-label">Low Risk</div>
+    </div>
+  </div>
+  
+  <div id="loading" class="loading" style="display: none;">
+    <div class="loading-spinner"></div>
+    <p>Analyzing extensions...</p>
+  </div>
+  
+  <div id="extensionsList" class="extensions-list"></div>
+  
+  <div id="detailView" class="detail-view">
+    <div class="detail-header">
+      <button id="backButton" class="back-button">←</button>
+      <h2 id="detailTitle">Extension Details</h2>
+    </div>
+    <div id="detailContent" class="detail-content"></div>
+  </div>
+  
+  <div class="footer">
+    Created by <strong>Leandro Malaquias</strong> | 
+    <a href="https://github.com/leandromalaquias" target="_blank">GitHub</a> | 
+    <a href="https://linkedin.com/in/leandromalaquias" target="_blank">LinkedIn</a>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
