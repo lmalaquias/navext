@@ -1,4 +1,4 @@
-# navext
+# Navext
 NavExt is a Chrome extension that analyzes your installed extensions for security risks, helping you identify potentially dangerous or overly permissive extensions that could compromise your privacy and security.
 
 ## 🔍 Features:
